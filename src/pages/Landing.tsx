@@ -10,8 +10,6 @@ import {
   FileCheck2,
   ArrowRight,
   HardHat,
-  Crane,
-  Truck,
 } from "lucide-react";
 import { EQUIPMENT_OPTIONS } from "@/lib/lift-plan";
 

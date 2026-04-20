@@ -3,6 +3,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
+import heroImage from "@/assets/hero-cranes.jpg";
 import {
   ShieldCheck,
   ArrowRight,

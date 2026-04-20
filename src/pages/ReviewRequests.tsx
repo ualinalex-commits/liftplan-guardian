@@ -22,11 +22,18 @@ const ReviewRequests = () => {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase
+      const { data: plansData, error } = await supabase
         .from("lift_plans")
-        .select("*, profiles!lift_plans_client_id_fkey(full_name, company, email)")
+        .select("*")
         .order("created_at", { ascending: false });
-      if (!error && data) setPlans(data as unknown as PlanWithProfile[]);
+      if (error || !plansData) { setLoading(false); return; }
+      const ids = Array.from(new Set(plansData.map((p) => p.client_id)));
+      const { data: profs } = await supabase
+        .from("profiles")
+        .select("id, full_name, company, email")
+        .in("id", ids);
+      const byId = new Map((profs ?? []).map((p) => [p.id, p]));
+      setPlans(plansData.map((p) => ({ ...p, profiles: byId.get(p.client_id) ?? null })) as PlanWithProfile[]);
       setLoading(false);
     })();
   }, []);

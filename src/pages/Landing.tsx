@@ -3,6 +3,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
+import heroImage from "@/assets/hero-cranes.jpg";
 import {
   ShieldCheck,
   ArrowRight,
@@ -21,26 +22,35 @@ const Landing = () => {
     <AppLayout>
       {/* Hero */}
       <section className="relative overflow-hidden">
+        <img
+          src={heroImage}
+          alt="Tower cranes silhouetted against a dramatic dusk sky"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
         <div
           className="absolute inset-0 -z-10"
-          style={{ background: "var(--gradient-hero)" }}
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(222 47% 6% / 0.55) 0%, hsl(222 47% 9% / 0.75) 60%, hsl(222 47% 9% / 0.95) 100%)",
+          }}
           aria-hidden
         />
-        <div className="absolute inset-0 -z-10 bg-grid opacity-[0.07]" aria-hidden />
-        <div className="container py-16 sm:py-24 md:py-32 text-primary-foreground relative">
+        <div className="container py-20 sm:py-28 md:py-40 text-primary-foreground relative">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 backdrop-blur border border-accent/30 text-accent text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6 sm:mb-8">
               <span className="size-1.5 rounded-full bg-accent shadow-glow" />
               UK Appointed Person Services
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-5 sm:mb-6 leading-[0.95] text-balance">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-5 sm:mb-6 leading-[0.95] text-balance drop-shadow-[0_2px_20px_rgba(0,0,0,0.4)]">
               Lift plans,
               <br />
-              <span className="italic font-display bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">
+              <span className="italic font-display bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">
                 reviewed or written.
               </span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/75 mb-8 sm:mb-10 max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/85 mb-8 sm:mb-10 max-w-2xl leading-relaxed">
               Independent UK Appointed Persons either review your existing lift plan or write
               one for you from scratch — for tower cranes, mobile cranes, MEWPs, forklifts and more.
             </p>
@@ -71,14 +81,14 @@ const Landing = () => {
                     asChild
                     size="lg"
                     variant="outline"
-                    className="bg-transparent text-primary-foreground border-primary-foreground/25 hover:bg-primary-foreground/10 hover:text-primary-foreground h-12 px-7 text-base"
+                    className="bg-background/10 backdrop-blur text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/15 hover:text-primary-foreground h-12 px-7 text-base"
                   >
                     <Link to="/auth">Sign in</Link>
                   </Button>
                 </>
               )}
             </div>
-            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-primary-foreground/60">
+            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-primary-foreground/70">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="size-4 text-accent" /> LOLER & BS 7121 compliant
               </div>

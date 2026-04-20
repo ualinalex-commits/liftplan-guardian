@@ -27,20 +27,20 @@ const Landing = () => {
           aria-hidden
         />
         <div className="absolute inset-0 -z-10 bg-grid opacity-[0.07]" aria-hidden />
-        <div className="container py-24 md:py-32 text-primary-foreground relative">
+        <div className="container py-16 sm:py-24 md:py-32 text-primary-foreground relative">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 backdrop-blur border border-accent/30 text-accent text-[11px] font-semibold uppercase tracking-[0.18em] mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 backdrop-blur border border-accent/30 text-accent text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6 sm:mb-8">
               <span className="size-1.5 rounded-full bg-accent shadow-glow" />
               UK Appointed Person Services
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-[0.95] text-balance">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-5 sm:mb-6 leading-[0.95] text-balance">
               Lift plans,
               <br />
               <span className="italic font-display bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">
                 reviewed or written.
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/75 mb-8 sm:mb-10 max-w-2xl leading-relaxed">
               Independent UK Appointed Persons either review your existing lift plan or write
               one for you from scratch — for tower cranes, mobile cranes, MEWPs, forklifts and more.
             </p>
@@ -94,19 +94,19 @@ const Landing = () => {
       </section>
 
       {/* Two services */}
-      <section className="container py-20 md:py-28">
-        <div className="max-w-2xl mb-12">
+      <section className="container py-14 sm:py-20 md:py-28">
+        <div className="max-w-2xl mb-8 sm:mb-12">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-3">
             Two services
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
             Pick what you need.
           </h2>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {/* Review card */}
           <Card
-            className="group relative p-8 border-border/60 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-500 overflow-hidden"
+            className="group relative p-6 sm:p-8 border-border/60 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-500 overflow-hidden"
             style={{ background: "var(--gradient-card)" }}
           >
             <div className="absolute top-0 right-0 text-[8rem] font-display font-bold leading-none text-primary/5 group-hover:text-primary/10 transition-colors -mt-4 mr-2 select-none">
@@ -141,7 +141,7 @@ const Landing = () => {
 
           {/* Write card */}
           <Card
-            className="group relative p-8 border-accent/40 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-500 overflow-hidden"
+            className="group relative p-6 sm:p-8 border-accent/40 shadow-card hover:shadow-elevated hover:-translate-y-1 transition-all duration-500 overflow-hidden"
             style={{ background: "var(--gradient-card)" }}
           >
             <div className="absolute top-0 right-0 text-[8rem] font-display font-bold leading-none text-accent/5 group-hover:text-accent/10 transition-colors -mt-4 mr-2 select-none">
@@ -183,12 +183,12 @@ const Landing = () => {
       {/* Equipment */}
       <section className="relative border-y border-border/60 overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-mesh opacity-60" aria-hidden />
-        <div className="container py-20 md:py-24">
-          <div className="max-w-2xl mb-12">
+        <div className="container py-14 sm:py-20 md:py-24">
+          <div className="max-w-2xl mb-8 sm:mb-12">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-3">
               Coverage
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
               Every lifting operation under LOLER & BS 7121.
             </h2>
             <p className="text-muted-foreground">
@@ -220,17 +220,17 @@ const Landing = () => {
         </div>
       </section>
 
-      <section className="container py-24 md:py-32">
+      <section className="container py-16 sm:py-24 md:py-32">
         <Card
-          className="relative overflow-hidden border-0 p-12 md:p-20 text-center text-primary-foreground"
+          className="relative overflow-hidden border-0 p-8 sm:p-12 md:p-20 text-center text-primary-foreground"
           style={{ background: "var(--gradient-hero)" }}
         >
           <div className="absolute inset-0 bg-grid opacity-[0.06]" aria-hidden />
           <div className="relative max-w-2xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-5 text-balance">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 text-balance">
               Ready when you are.
             </h2>
-            <p className="text-primary-foreground/75 mb-8 text-lg">
+            <p className="text-primary-foreground/75 mb-8 text-base sm:text-lg">
               Sign up in seconds — submit a plan for review or request one to be written.
             </p>
             {!user ? (

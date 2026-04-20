@@ -58,6 +58,107 @@ export type Database = {
           },
         ]
       }
+      lift_plan_write_files: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          is_deliverable: boolean
+          lift_plan_write_id: string
+          mime_type: string | null
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          is_deliverable?: boolean
+          lift_plan_write_id: string
+          mime_type?: string | null
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          is_deliverable?: boolean
+          lift_plan_write_id?: string
+          mime_type?: string | null
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lift_plan_write_files_lift_plan_write_id_fkey"
+            columns: ["lift_plan_write_id"]
+            isOneToOne: false
+            referencedRelation: "lift_plan_writes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lift_plan_writes: {
+        Row: {
+          assigned_at: string | null
+          assigned_to: string | null
+          client_id: string
+          completed_at: string | null
+          created_at: string
+          details: string
+          equipment_type: Database["public"]["Enums"]["equipment_type"]
+          id: string
+          payment_status: Database["public"]["Enums"]["payment_status"]
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          po_number: string | null
+          price: number | null
+          reference: string
+          status: Database["public"]["Enums"]["lift_plan_write_status"]
+          timeframe: Database["public"]["Enums"]["timeframe_type"]
+          updated_at: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_to?: string | null
+          client_id: string
+          completed_at?: string | null
+          created_at?: string
+          details: string
+          equipment_type: Database["public"]["Enums"]["equipment_type"]
+          id?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          po_number?: string | null
+          price?: number | null
+          reference: string
+          status?: Database["public"]["Enums"]["lift_plan_write_status"]
+          timeframe: Database["public"]["Enums"]["timeframe_type"]
+          updated_at?: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_to?: string | null
+          client_id?: string
+          completed_at?: string | null
+          created_at?: string
+          details?: string
+          equipment_type?: Database["public"]["Enums"]["equipment_type"]
+          id?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          payment_type?: Database["public"]["Enums"]["payment_type"]
+          po_number?: string | null
+          price?: number | null
+          reference?: string
+          status?: Database["public"]["Enums"]["lift_plan_write_status"]
+          timeframe?: Database["public"]["Enums"]["timeframe_type"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lift_plans: {
         Row: {
           assigned_at: string | null
@@ -233,6 +334,38 @@ export type Database = {
         }
         Relationships: []
       }
+      write_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          lift_plan_write_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          lift_plan_write_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          lift_plan_write_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "write_messages_lift_plan_write_id_fkey"
+            columns: ["lift_plan_write_id"]
+            isOneToOne: false
+            referencedRelation: "lift_plan_writes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -261,6 +394,12 @@ export type Database = {
         | "in_review"
         | "request_info"
         | "rejected"
+        | "completed"
+      lift_plan_write_status:
+        | "submitted"
+        | "assigned"
+        | "request_info"
+        | "draft_delivered"
         | "completed"
       payment_status: "pending" | "paid" | "po_recorded"
       payment_type: "po" | "direct"
@@ -407,6 +546,13 @@ export const Constants = {
         "in_review",
         "request_info",
         "rejected",
+        "completed",
+      ],
+      lift_plan_write_status: [
+        "submitted",
+        "assigned",
+        "request_info",
+        "draft_delivered",
         "completed",
       ],
       payment_status: ["pending", "paid", "po_recorded"],

@@ -3,7 +3,7 @@ import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
-import heroImage from "@/assets/hero-cranes.jpg";
+import heroImage from "@/assets/hero-cranes.png";
 import {
   ShieldCheck,
   ArrowRight,
@@ -24,16 +24,16 @@ const Landing = () => {
       <section className="relative overflow-hidden">
         <img
           src={heroImage}
-          alt="Tower cranes silhouetted against a dramatic dusk sky"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          alt="Construction engineer reviewing lift plan blueprints with tower crane in background"
+          width={1536}
+          height={1024}
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
         />
         <div
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(180deg, hsl(222 47% 6% / 0.55) 0%, hsl(222 47% 9% / 0.75) 60%, hsl(222 47% 9% / 0.95) 100%)",
+              "linear-gradient(90deg, hsl(222 47% 9% / 0.85) 0%, hsl(222 47% 9% / 0.7) 45%, hsl(222 47% 9% / 0.45) 75%, hsl(222 47% 9% / 0.55) 100%)",
           }}
           aria-hidden
         />

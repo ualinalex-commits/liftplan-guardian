@@ -36,7 +36,7 @@ const Landing = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-[0.95] text-balance">
               Lift plans,
               <br />
-              <span className="italic font-display bg-gradient-to-r from-accent via-accent to-orange-400 bg-clip-text text-transparent">reviewed properly.</span>
+              <span className="italic font-display bg-gradient-to-r from-accent to-accent bg-clip-text text-transparent">reviewed properly.</span>
             </h1>
             <p className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed">
               Submit your lift plan for tower cranes, mobile cranes, MEWPs, forklifts and more.

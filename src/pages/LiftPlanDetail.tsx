@@ -358,34 +358,60 @@ const LiftPlanDetail = ({ reviewerView = false }: { reviewerView?: boolean }) =>
               </Card>
             )}
 
-            {messages.length > 0 || showRequestInfoForClient ? (
+            {canChat && (
               <Card className="p-6">
-                <h2 className="font-semibold mb-4 flex items-center gap-2"><MessageSquare className="size-4" /> Messages</h2>
-                <div className="space-y-3 mb-4">
-                  {messages.map((m) => {
-                    const mine = m.sender_id === user?.id;
-                    return (
-                      <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-                        <div className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${mine ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
-                          <p className="whitespace-pre-wrap">{m.body}</p>
-                          <p className={`text-xs mt-1 ${mine ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
-                            {format(new Date(m.created_at), "dd MMM, HH:mm")}
-                          </p>
+                <h2 className="font-semibold mb-4 flex items-center gap-2">
+                  <MessageSquare className="size-4" /> Chat
+                  <span className="text-xs font-normal text-muted-foreground ml-auto">
+                    {reviewerView ? "Talking with client" : plan.assigned_to ? "Talking with your reviewer" : "Reviewer not yet assigned"}
+                  </span>
+                </h2>
+                <div className="space-y-3 mb-4 max-h-[420px] overflow-y-auto">
+                  {messages.length === 0 ? (
+                    <p className="text-sm text-muted-foreground text-center py-6">
+                      No messages yet. Start the conversation below.
+                    </p>
+                  ) : (
+                    messages.map((m) => {
+                      const mine = m.sender_id === user?.id;
+                      return (
+                        <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
+                          <div className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${mine ? "bg-primary text-primary-foreground" : "bg-secondary"}`}>
+                            <p className="whitespace-pre-wrap">{m.body}</p>
+                            <p className={`text-xs mt-1 ${mine ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                              {format(new Date(m.created_at), "dd MMM, HH:mm")}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  )}
                 </div>
-                {(plan.status === "request_info" || reviewerView) && (
+                {chatLocked ? (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Chat is closed because this plan is {STATUS_LABEL[plan.status].toLowerCase()}.
+                  </p>
+                ) : (
                   <div className="flex gap-2">
-                    <Textarea value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Type a reply..." rows={2} />
+                    <Textarea
+                      value={reply}
+                      onChange={(e) => setReply(e.target.value)}
+                      placeholder="Type a message..."
+                      rows={2}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          sendReply();
+                        }
+                      }}
+                    />
                     <Button onClick={sendReply} disabled={sendingReply || !reply.trim()}>
                       <Send className="size-4" />
                     </Button>
                   </div>
                 )}
               </Card>
-            ) : null}
+            )}
           </div>
 
           <div className="space-y-6">

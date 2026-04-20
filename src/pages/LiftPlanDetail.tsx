@@ -113,6 +113,24 @@ const LiftPlanDetail = ({ reviewerView = false }: { reviewerView?: boolean }) =>
 
   useEffect(() => {
     load();
+    if (!id) return;
+    const channel = supabase
+      .channel(`lift-plan-${id}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "messages", filter: `lift_plan_id=eq.${id}` },
+        (payload) => {
+          setMessages((prev) =>
+            prev.some((m) => m.id === (payload.new as MessageRow).id)
+              ? prev
+              : [...prev, payload.new as MessageRow]
+          );
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 

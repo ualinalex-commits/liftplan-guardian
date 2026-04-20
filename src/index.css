@@ -7,50 +7,58 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    --background: 40 30% 97%;
+    --foreground: 222 47% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 222 47% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 222 47% 9%;
 
-    --primary: 217 91% 24%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 217 91% 40%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 40 30% 97%;
+    --primary-glow: 222 47% 22%;
 
-    --secondary: 210 30% 94%;
+    --secondary: 40 20% 93%;
     --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 30% 94%;
-    --muted-foreground: 215 16% 40%;
+    --muted: 40 20% 93%;
+    --muted-foreground: 222 15% 40%;
 
-    --accent: 38 95% 50%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 32 100% 52%;
+    --accent-foreground: 222 47% 9%;
+    --accent-glow: 38 100% 60%;
 
-    --destructive: 0 75% 50%;
+    --destructive: 0 72% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 142 71% 38%;
+    --success: 152 60% 36%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 95% 50%;
-    --warning-foreground: 222 47% 11%;
+    --warning: 32 100% 52%;
+    --warning-foreground: 222 47% 9%;
 
     --info: 217 91% 50%;
     --info-foreground: 0 0% 100%;
 
-    --border: 214 25% 88%;
-    --input: 214 25% 88%;
-    --ring: 217 91% 24%;
+    --border: 222 15% 88%;
+    --input: 222 15% 88%;
+    --ring: 32 100% 52%;
 
-    --radius: 0.5rem;
+    --radius: 0.875rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(217 91% 18%) 0%, hsl(217 91% 30%) 60%, hsl(38 95% 50%) 140%);
-    --gradient-accent: linear-gradient(135deg, hsl(38 95% 50%), hsl(28 95% 55%));
-    --shadow-elevated: 0 20px 50px -20px hsl(217 91% 24% / 0.35);
-    --shadow-card: 0 4px 16px -4px hsl(222 47% 11% / 0.08);
+    --gradient-hero: radial-gradient(ellipse 80% 60% at 20% 0%, hsl(32 100% 52% / 0.35), transparent 60%), radial-gradient(ellipse 70% 50% at 90% 100%, hsl(222 47% 22% / 0.6), transparent 60%), linear-gradient(180deg, hsl(222 47% 9%), hsl(222 47% 14%));
+    --gradient-accent: linear-gradient(135deg, hsl(32 100% 52%), hsl(18 95% 55%));
+    --gradient-subtle: linear-gradient(180deg, hsl(40 30% 97%), hsl(40 20% 93%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 25% 96%));
+    --shadow-elevated: 0 30px 60px -25px hsl(222 47% 9% / 0.35), 0 0 0 1px hsl(222 15% 88% / 0.5);
+    --shadow-card: 0 1px 2px hsl(222 47% 9% / 0.04), 0 8px 24px -8px hsl(222 47% 9% / 0.08);
+    --shadow-glow: 0 0 60px hsl(32 100% 52% / 0.4);
+    --transition-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
 
     --sidebar-background: 222 47% 11%;
     --sidebar-foreground: 210 40% 96%;
@@ -94,6 +102,35 @@
 
 @layer base {
   * { @apply border-border; }
-  body { @apply bg-background text-foreground; font-feature-settings: "cv02","cv03","cv04","cv11"; }
-  h1,h2,h3,h4 { @apply tracking-tight; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+    font-feature-settings: "cv02","cv03","cv04","cv11","ss01";
+  }
+  h1,h2,h3,h4 {
+    font-family: var(--font-display);
+    @apply tracking-tight;
+    font-feature-settings: "ss01","ss02";
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .text-balance { text-wrap: balance; }
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 27% 37%, hsl(32 100% 52% / 0.15) 0px, transparent 50%),
+      radial-gradient(at 97% 21%, hsl(222 47% 22% / 0.1) 0px, transparent 50%),
+      radial-gradient(at 52% 99%, hsl(32 100% 52% / 0.08) 0px, transparent 50%);
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(222 15% 88% / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(222 15% 88% / 0.4) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 70%);
+  }
+  .shadow-elevated { box-shadow: var(--shadow-elevated); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-card { box-shadow: var(--shadow-card); }
 }

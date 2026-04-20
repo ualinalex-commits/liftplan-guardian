@@ -258,7 +258,8 @@ const LiftPlanDetail = ({ reviewerView = false }: { reviewerView?: boolean }) =>
 
   const reviewDocs = files.filter((f) => f.is_review_document);
   const submittedFiles = files.filter((f) => !f.is_review_document);
-  const showRequestInfoForClient = plan.status === "request_info" && !reviewerView;
+  const canChat = reviewerView || plan.client_id === user?.id;
+  const chatLocked = plan.status === "completed" || plan.status === "rejected";
 
   return (
     <AppLayout>

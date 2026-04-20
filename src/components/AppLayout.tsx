@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { HardHat, LayoutDashboard, ClipboardList, BarChart3, LogOut, Home } from "lucide-react";
+import { HardHat, LayoutDashboard, ClipboardList, BarChart3, LogOut, Home, PencilRuler } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function AppLayout({ children }: { children: ReactNode }) {
@@ -17,7 +17,8 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const navItems = [
     { to: "/", label: "Home", icon: Home, show: true },
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, show: !!user && !isReviewer },
-    { to: "/review-requests", label: "Review Requests", icon: ClipboardList, show: isReviewer },
+    { to: "/review-requests", label: "Reviews", icon: ClipboardList, show: isReviewer },
+    { to: "/write-requests", label: "Writes", icon: PencilRuler, show: isReviewer },
     { to: "/management", label: "Management", icon: BarChart3, show: isReviewer },
   ].filter((i) => i.show);
 

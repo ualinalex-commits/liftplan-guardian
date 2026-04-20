@@ -300,7 +300,7 @@ const LiftPlanWriteDetail = ({ reviewerView = false }: { reviewerView?: boolean 
               )}
               {write.assigned_to === user?.id && (
                 <Select onValueChange={(v) => openStatus(v as LiftPlanWriteStatus)}>
-                  <SelectTrigger className="w-[210px]">
+                  <SelectTrigger className="w-full sm:w-[210px]">
                     <SelectValue placeholder="Update status" />
                   </SelectTrigger>
                   <SelectContent>

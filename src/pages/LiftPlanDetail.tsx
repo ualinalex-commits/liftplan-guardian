@@ -306,7 +306,7 @@ const LiftPlanDetail = ({ reviewerView = false }: { reviewerView?: boolean }) =>
               )}
               {plan.assigned_to === user?.id && (
                 <Select onValueChange={(v) => openStatus(v as LiftPlanStatus)}>
-                  <SelectTrigger className="w-[200px]">
+                  <SelectTrigger className="w-full sm:w-[200px]">
                     <SelectValue placeholder="Update status" />
                   </SelectTrigger>
                   <SelectContent>

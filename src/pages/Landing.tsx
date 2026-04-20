@@ -55,7 +55,7 @@ const Landing = () => {
               Independent UK Appointed Persons either review your existing lift plan or write
               one for you from scratch — for tower cranes, mobile cranes, MEWPs, forklifts and more.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 md:justify-end">
               {user ? (
                 <Button
                   asChild

@@ -89,7 +89,7 @@ const Landing = () => {
                 </>
               )}
             </div>
-            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-primary-foreground/70">
+            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-primary-foreground/70 md:justify-end">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="size-4 text-accent" /> LOLER & BS 7121 compliant
               </div>

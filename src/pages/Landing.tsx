@@ -29,12 +29,20 @@ const Landing = () => {
           height={1024}
           className="absolute inset-0 -z-10 h-full w-full object-cover object-left"
         />
-        {/* Right-side dark overlay so light hero image stays visible on the left, text readable on the right */}
+        {/* Base tint to deepen the very light source image, then a right-side gradient for text contrast */}
         <div
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(270deg, hsl(222 47% 9% / 0.92) 0%, hsl(222 47% 9% / 0.85) 30%, hsl(222 47% 9% / 0.55) 60%, hsl(222 47% 9% / 0.15) 100%)",
+              "linear-gradient(180deg, hsl(222 47% 9% / 0.55) 0%, hsl(222 47% 9% / 0.45) 100%)",
+          }}
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "linear-gradient(270deg, hsl(222 47% 9% / 0.85) 0%, hsl(222 47% 9% / 0.65) 35%, hsl(222 47% 9% / 0.1) 70%, hsl(222 47% 9% / 0) 100%)",
           }}
           aria-hidden
         />

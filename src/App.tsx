@@ -10,6 +10,9 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import NewLiftPlan from "./pages/NewLiftPlan";
 import LiftPlanDetail from "./pages/LiftPlanDetail";
+import NewLiftPlanWrite from "./pages/NewLiftPlanWrite";
+import LiftPlanWriteDetail from "./pages/LiftPlanWriteDetail";
+import WriteRequests from "./pages/WriteRequests";
 import ReviewRequests from "./pages/ReviewRequests";
 import Management from "./pages/Management";
 import NotFound from "./pages/NotFound";
@@ -39,12 +42,28 @@ const App = () => (
               element={<ProtectedRoute><LiftPlanDetail /></ProtectedRoute>}
             />
             <Route
+              path="/writes/new"
+              element={<ProtectedRoute><NewLiftPlanWrite /></ProtectedRoute>}
+            />
+            <Route
+              path="/writes/:id"
+              element={<ProtectedRoute><LiftPlanWriteDetail /></ProtectedRoute>}
+            />
+            <Route
               path="/review-requests"
               element={<ProtectedRoute requireReviewer><ReviewRequests /></ProtectedRoute>}
             />
             <Route
               path="/review-requests/:id"
               element={<ProtectedRoute requireReviewer><LiftPlanDetail reviewerView /></ProtectedRoute>}
+            />
+            <Route
+              path="/write-requests"
+              element={<ProtectedRoute requireReviewer><WriteRequests /></ProtectedRoute>}
+            />
+            <Route
+              path="/write-requests/:id"
+              element={<ProtectedRoute requireReviewer><LiftPlanWriteDetail reviewerView /></ProtectedRoute>}
             />
             <Route
               path="/management"

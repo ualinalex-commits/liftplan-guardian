@@ -27,18 +27,19 @@ const Landing = () => {
           alt="Construction engineer reviewing lift plan blueprints with tower crane in background"
           width={1536}
           height={1024}
-          className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-left"
         />
+        {/* Right-side dark overlay so light hero image stays visible on the left, text readable on the right */}
         <div
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(90deg, hsl(222 47% 9% / 0.85) 0%, hsl(222 47% 9% / 0.7) 45%, hsl(222 47% 9% / 0.45) 75%, hsl(222 47% 9% / 0.55) 100%)",
+              "linear-gradient(270deg, hsl(222 47% 9% / 0.92) 0%, hsl(222 47% 9% / 0.85) 30%, hsl(222 47% 9% / 0.55) 60%, hsl(222 47% 9% / 0.15) 100%)",
           }}
           aria-hidden
         />
         <div className="container py-20 sm:py-28 md:py-40 text-primary-foreground relative">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl md:ml-auto md:text-right">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 backdrop-blur border border-accent/30 text-accent text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6 sm:mb-8">
               <span className="size-1.5 rounded-full bg-accent shadow-glow" />
               UK Appointed Person Services

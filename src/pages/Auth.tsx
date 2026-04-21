@@ -57,7 +57,7 @@ const Auth = () => {
           <div className="size-10 rounded-md bg-primary text-primary-foreground grid place-items-center">
             <HardHat className="size-5" />
           </div>
-          LiftReview
+          ADA Lifting
         </Link>
         <Card className="p-6 shadow-xl">
           <Tabs value={tab} onValueChange={setTab}>

@@ -24,24 +24,24 @@ const Landing = () => {
   return (
     <AppLayout>
       {/* Hero — image background with overlaid content */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden isolate bg-primary">
         {/* Background image */}
         <img
           src={heroImage}
           alt="Construction engineer reviewing lift plan with tower crane"
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
         />
         {/* Dark gradient overlay for legibility */}
         <div
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(180deg, hsl(222 47% 9% / 0.85) 0%, hsl(222 47% 9% / 0.65) 45%, hsl(222 47% 9% / 0.9) 100%)",
+              "linear-gradient(180deg, hsl(222 47% 9% / 0.75) 0%, hsl(222 47% 9% / 0.55) 45%, hsl(222 47% 9% / 0.85) 100%)",
           }}
           aria-hidden
         />
 
-        <div className="container pt-16 pb-20 sm:pt-24 sm:pb-28 md:pt-32 md:pb-36 lg:pt-40 lg:pb-44 text-primary-foreground">
+        <div className="container relative pt-16 pb-20 sm:pt-24 sm:pb-28 md:pt-32 md:pb-36 lg:pt-40 lg:pb-44 text-primary-foreground">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 border border-accent/40 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6 backdrop-blur">
               <span className="size-1.5 rounded-full bg-accent" />

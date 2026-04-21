@@ -23,126 +23,87 @@ const Landing = () => {
 
   return (
     <AppLayout>
-      {/* Hero — editorial split layout */}
-      <section className="relative overflow-hidden bg-background">
-        <div className="absolute inset-0 -z-10 bg-mesh opacity-70" aria-hidden />
+      {/* Hero — image background with overlaid content */}
+      <section className="relative overflow-hidden">
+        {/* Background image */}
+        <img
+          src={heroImage}
+          alt="Construction engineer reviewing lift plan with tower crane"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        />
+        {/* Dark gradient overlay for legibility */}
         <div
-          className="absolute -z-10 top-0 right-0 w-[60%] h-[60%] rounded-full blur-3xl opacity-30"
-          style={{ background: "var(--gradient-accent)" }}
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(222 47% 9% / 0.85) 0%, hsl(222 47% 9% / 0.65) 45%, hsl(222 47% 9% / 0.9) 100%)",
+          }}
           aria-hidden
         />
 
-        <div className="container pt-12 pb-16 sm:pt-20 sm:pb-24 md:pt-28 md:pb-32">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            {/* Left — copy */}
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6">
-                <span className="size-1.5 rounded-full bg-accent" />
-                <span className="text-foreground/80">UK Appointed Person Services</span>
-              </div>
+        <div className="container pt-16 pb-20 sm:pt-24 sm:pb-28 md:pt-32 md:pb-36 lg:pt-40 lg:pb-44 text-primary-foreground">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 border border-accent/40 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.18em] mb-6 backdrop-blur">
+              <span className="size-1.5 rounded-full bg-accent" />
+              <span>UK Appointed Person Services</span>
+            </div>
 
-              <h1 className="text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight text-balance mb-6">
-                Lift plans,
-                <br />
-                done <span className="italic font-display bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">properly.</span>
-              </h1>
+            <h1 className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight text-balance mb-6 drop-shadow-lg">
+              Lift plans,
+              <br />
+              done <span className="italic font-display bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">properly.</span>
+            </h1>
 
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-8">
-                Independent UK Appointed Persons review your existing lift plan — or
-                write one from scratch. Tower cranes, mobile cranes, MEWPs, forklifts and more.
-              </p>
+            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/85 max-w-xl leading-relaxed mb-8 drop-shadow">
+              Independent UK Appointed Persons review your existing lift plan — or
+              write one from scratch. Tower cranes, mobile cranes, MEWPs, forklifts and more.
+            </p>
 
-              <div className="flex flex-wrap gap-3 mb-10">
-                {user ? (
+            <div className="flex flex-wrap gap-3 mb-10">
+              {user ? (
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow h-12 px-7 text-base"
+                >
+                  <Link to={dashLink}>
+                    Go to {isReviewer ? "Requests" : "Dashboard"}
+                    <ArrowRight className="ml-1 size-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <>
                   <Button
                     asChild
                     size="lg"
                     className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow h-12 px-7 text-base"
                   >
-                    <Link to={dashLink}>
-                      Go to {isReviewer ? "Requests" : "Dashboard"}
-                      <ArrowRight className="ml-1 size-4" />
+                    <Link to="/auth?mode=signup">
+                      Get started <ArrowRight className="ml-1 size-4" />
                     </Link>
                   </Button>
-                ) : (
-                  <>
-                    <Button
-                      asChild
-                      size="lg"
-                      className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow h-12 px-7 text-base"
-                    >
-                      <Link to="/auth?mode=signup">
-                        Get started <ArrowRight className="ml-1 size-4" />
-                      </Link>
-                    </Button>
-                    <Button asChild size="lg" variant="outline" className="h-12 px-7 text-base">
-                      <Link to="/auth">Sign in</Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="size-4 text-accent" /> LOLER & BS 7121
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="size-4 text-accent" /> 24h turnaround
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="size-4 text-accent" /> Qualified APs
-                </div>
-              </div>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="h-12 px-7 text-base bg-background/10 border-primary-foreground/40 text-primary-foreground hover:bg-background/20 hover:text-primary-foreground backdrop-blur"
+                  >
+                    <Link to="/auth">Sign in</Link>
+                  </Button>
+                </>
+              )}
             </div>
 
-            {/* Right — framed image with floating cards */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-elevated">
-                <img
-                  src={heroImage}
-                  alt="Construction engineer reviewing lift plan with tower crane"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div
-                  className="absolute inset-x-0 bottom-0 h-1/3"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, hsl(222 47% 9% / 0) 0%, hsl(222 47% 9% / 0.6) 100%)",
-                  }}
-                  aria-hidden
-                />
-                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between text-primary-foreground">
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80">
-                      In review
-                    </p>
-                    <p className="text-sm font-semibold">Tower crane · Site 04</p>
-                  </div>
-                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-success/90 text-success-foreground text-[10px] font-bold uppercase tracking-wider">
-                    <CheckCircle2 className="size-3" /> Compliant
-                  </div>
-                </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-primary-foreground/85">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="size-4 text-accent" /> LOLER & BS 7121
               </div>
-
-              <Card className="hidden sm:flex absolute -top-5 -left-5 lg:-left-10 items-center gap-3 px-4 py-3 shadow-elevated bg-card/95 backdrop-blur">
-                <div className="size-10 rounded-xl bg-accent/15 grid place-items-center text-accent">
-                  <Star className="size-5 fill-accent" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold leading-none">4.9/5</p>
-                  <p className="text-[11px] text-muted-foreground">AP rating</p>
-                </div>
-              </Card>
-
-              <Card className="hidden sm:flex absolute -bottom-5 -right-5 lg:-right-10 items-center gap-3 px-4 py-3 shadow-elevated bg-card/95 backdrop-blur">
-                <div className="size-10 rounded-xl bg-primary/10 grid place-items-center text-primary">
-                  <ClipboardCheck className="size-5" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold leading-none">500+</p>
-                  <p className="text-[11px] text-muted-foreground">Plans reviewed</p>
-                </div>
-              </Card>
+              <div className="flex items-center gap-2">
+                <Clock className="size-4 text-accent" /> 24h turnaround
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="size-4 text-accent" /> Qualified APs
+              </div>
             </div>
           </div>
         </div>

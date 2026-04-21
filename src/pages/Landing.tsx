@@ -96,7 +96,7 @@ const Landing = () => {
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-primary-foreground/85">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-4 text-accent" /> LOLER & BS 7121
+                <ShieldCheck className="size-4 text-accent" /> LOLER compliant
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="size-4 text-accent" /> 24h turnaround
@@ -205,7 +205,7 @@ const Landing = () => {
               Coverage
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
-              Every lifting operation under LOLER & BS 7121.
+              Every lifting operation, covered under LOLER (and BS 7121 for mobile cranes).
             </h2>
             <p className="text-muted-foreground">
               Reviews are available across all equipment. Written plans are rolling out — forklift

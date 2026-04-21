@@ -30,7 +30,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
             <div className="size-9 rounded-md bg-primary text-primary-foreground grid place-items-center">
               <HardHat className="size-5" />
             </div>
-            <span className="hidden sm:inline">LiftReview</span>
+            <span className="hidden sm:inline">ADA Lifting</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -94,7 +94,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </header>
       <main className="flex-1">{children}</main>
       <footer className="border-t py-6 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} LiftReview · Third-party lift plan reviews
+        © {new Date().getFullYear()} ADA Lifting · Third-party lift plan reviews
       </footer>
     </div>
   );

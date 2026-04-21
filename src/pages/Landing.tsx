@@ -51,7 +51,7 @@ const Landing = () => {
             <h1 className="text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight text-balance mb-6 drop-shadow-lg">
               Lift plans,
               <br />
-              done <span className="italic font-display bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">properly.</span>
+              done <span className="italic font-display text-accent">properly.</span>
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-primary-foreground/85 max-w-xl leading-relaxed mb-8 drop-shadow">

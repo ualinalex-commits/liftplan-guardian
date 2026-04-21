@@ -10,6 +10,9 @@ import {
   HardHat,
   ClipboardCheck,
   PencilRuler,
+  Clock,
+  CheckCircle2,
+  Star,
 } from "lucide-react";
 import { EQUIPMENT_OPTIONS } from "@/lib/lift-plan";
 import { WRITE_EQUIPMENT_AVAILABLE } from "@/lib/lift-plan-write";

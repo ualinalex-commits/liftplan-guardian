@@ -205,7 +205,7 @@ const Landing = () => {
               Coverage
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
-              Every lifting operation, covered under LOLER (and British Standard for mobile cranes).
+              Every lifting operation, covered under LOLER and British Standards.
             </h2>
             <p className="text-muted-foreground">
               Reviews are available across all equipment. Written plans are rolling out — forklift

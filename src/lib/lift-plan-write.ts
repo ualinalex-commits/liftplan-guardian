@@ -21,12 +21,12 @@ export const WRITE_STATUS_VARIANT: Record<LiftPlanWriteStatus, string> = {
 };
 
 // Equipment availability for the WRITING service.
-// Only forklift is currently available; others show "coming soon".
+// Currently available: Telehandler (forklift) and MEWP. Others coming soon.
 export const WRITE_EQUIPMENT_AVAILABLE: Record<EquipmentType, boolean> = {
   forklift: true,
+  mewp: true,
   tower_crane: false,
   mobile_crane: false,
   digger: false,
   hiab: false,
-  mewp: false,
 };

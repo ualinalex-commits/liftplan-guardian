@@ -43,10 +43,11 @@ export const PricingManager = () => {
     }
     setSavingKey(key);
     const existing = rows.find((r) => r.service === service && r.equipment_type === eq);
-    const payload = { service, equipment_type: eq, price: value };
+    const payload = { service, equipment_type: eq, price: value } as never;
+    const tbl = supabase.from("service_pricing" as never);
     const { error } = existing
-      ? await supabase.from("service_pricing" as never).update(payload).eq("id", existing.id)
-      : await supabase.from("service_pricing" as never).insert(payload);
+      ? await (tbl as any).update(payload).eq("id", existing.id)
+      : await (tbl as any).insert(payload);
     if (error) toast.error(error.message);
     else {
       toast.success("Price saved");

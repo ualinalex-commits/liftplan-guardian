@@ -110,6 +110,7 @@ export type Database = {
           completed_at: string | null
           created_at: string
           details: string
+          due_date: string | null
           equipment_type: Database["public"]["Enums"]["equipment_type"]
           id: string
           payment_status: Database["public"]["Enums"]["payment_status"]
@@ -128,6 +129,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           details: string
+          due_date?: string | null
           equipment_type: Database["public"]["Enums"]["equipment_type"]
           id?: string
           payment_status?: Database["public"]["Enums"]["payment_status"]
@@ -146,6 +148,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           details?: string
+          due_date?: string | null
           equipment_type?: Database["public"]["Enums"]["equipment_type"]
           id?: string
           payment_status?: Database["public"]["Enums"]["payment_status"]
@@ -167,6 +170,7 @@ export type Database = {
           completed_at: string | null
           created_at: string
           description: string | null
+          due_date: string | null
           equipment_type: Database["public"]["Enums"]["equipment_type"]
           id: string
           payment_status: Database["public"]["Enums"]["payment_status"]
@@ -185,6 +189,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           description?: string | null
+          due_date?: string | null
           equipment_type: Database["public"]["Enums"]["equipment_type"]
           id?: string
           payment_status?: Database["public"]["Enums"]["payment_status"]
@@ -203,6 +208,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           description?: string | null
+          due_date?: string | null
           equipment_type?: Database["public"]["Enums"]["equipment_type"]
           id?: string
           payment_status?: Database["public"]["Enums"]["payment_status"]
@@ -272,6 +278,36 @@ export type Database = {
           full_name?: string
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      service_pricing: {
+        Row: {
+          created_at: string
+          equipment_type: Database["public"]["Enums"]["equipment_type"]
+          id: string
+          price: number
+          service: Database["public"]["Enums"]["service_kind"]
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          equipment_type: Database["public"]["Enums"]["equipment_type"]
+          id?: string
+          price?: number
+          service: Database["public"]["Enums"]["service_kind"]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          equipment_type?: Database["public"]["Enums"]["equipment_type"]
+          id?: string
+          price?: number
+          service?: Database["public"]["Enums"]["service_kind"]
+          updated_at?: string
+          updated_by?: string | null
         }
         Relationships: []
       }
@@ -403,6 +439,7 @@ export type Database = {
         | "completed"
       payment_status: "pending" | "paid" | "po_recorded"
       payment_type: "po" | "direct"
+      service_kind: "review" | "write"
       timeframe_type: "24h" | "48h" | "72h"
     }
     CompositeTypes: {
@@ -557,6 +594,7 @@ export const Constants = {
       ],
       payment_status: ["pending", "paid", "po_recorded"],
       payment_type: ["po", "direct"],
+      service_kind: ["review", "write"],
       timeframe_type: ["24h", "48h", "72h"],
     },
   },

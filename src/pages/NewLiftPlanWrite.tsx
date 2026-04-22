@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,18 +15,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  EQUIPMENT_OPTIONS,
-  TIMEFRAME_OPTIONS,
-  EquipmentType,
-  Timeframe,
-  PaymentType,
-} from "@/lib/lift-plan";
+import { EQUIPMENT_OPTIONS, EquipmentType, PaymentType } from "@/lib/lift-plan";
 import { WRITE_EQUIPMENT_AVAILABLE } from "@/lib/lift-plan-write";
+import { MIN_LEAD_HOURS, MIN_LEAD_LABEL, hoursUntil, ServicePricingRow } from "@/lib/pricing";
 import { toast } from "sonner";
-import { Loader2, Upload, X, ArrowLeft, PencilRuler } from "lucide-react";
+import { Loader2, Upload, X, ArrowLeft, PencilRuler, CalendarIcon, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const NewLiftPlanWrite = () => {
   const { user, profile } = useAuth();
@@ -35,10 +34,25 @@ const NewLiftPlanWrite = () => {
   const [reference, setReference] = useState("");
   const [details, setDetails] = useState("");
   const [equipment, setEquipment] = useState<EquipmentType | "">("");
-  const [timeframe, setTimeframe] = useState<Timeframe | "">("");
+  const [dueDate, setDueDate] = useState<Date | undefined>();
   const [paymentType, setPaymentType] = useState<PaymentType>("direct");
   const [poNumber, setPoNumber] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [pricing, setPricing] = useState<ServicePricingRow[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("service_pricing" as never)
+        .select("*")
+        .eq("service", "write");
+      setPricing((data as ServicePricingRow[]) ?? []);
+    })();
+  }, []);
+
+  const price = equipment ? pricing.find((p) => p.equipment_type === equipment)?.price ?? 0 : 0;
+  const leadHours = dueDate ? hoursUntil(dueDate) : null;
+  const tooSoon = leadHours !== null && leadHours < MIN_LEAD_HOURS.write;
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
@@ -47,9 +61,13 @@ const NewLiftPlanWrite = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !equipment || !timeframe) return;
+    if (!user || !equipment || !dueDate) return;
     if (!WRITE_EQUIPMENT_AVAILABLE[equipment]) {
       toast.error("This equipment type isn't available for writing yet");
+      return;
+    }
+    if (tooSoon) {
+      toast.error(`Written plans need at least ${MIN_LEAD_LABEL.write} notice`);
       return;
     }
     if (!details.trim()) {
@@ -69,12 +87,14 @@ const NewLiftPlanWrite = () => {
           reference: reference.trim(),
           details: details.trim(),
           equipment_type: equipment,
-          timeframe,
+          timeframe: "72h",
+          due_date: dueDate.toISOString(),
           payment_type: paymentType,
           payment_status: paymentType === "po" ? "po_recorded" : "pending",
           po_number: paymentType === "po" ? poNumber.trim() : null,
+          price: price || null,
           status: "submitted",
-        })
+        } as never)
         .select()
         .single();
       if (writeErr) throw writeErr;
@@ -196,21 +216,40 @@ const NewLiftPlanWrite = () => {
                     This equipment type isn't available for writing yet.
                   </p>
                 )}
+                {equipment && WRITE_EQUIPMENT_AVAILABLE[equipment] && price > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">Price: £{price.toFixed(2)}</p>
+                )}
               </div>
               <div>
-                <Label>Timeframe *</Label>
-                <Select value={timeframe} onValueChange={(v) => setTimeframe(v as Timeframe)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select timeframe" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIMEFRAME_OPTIONS.map((o) => (
-                      <SelectItem key={o.value} value={o.value}>
-                        {o.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label>Due date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className={cn("w-full justify-start text-left font-normal", !dueDate && "text-muted-foreground")}
+                    >
+                      <CalendarIcon className="mr-2 size-4" />
+                      {dueDate ? format(dueDate, "PPP") : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={dueDate}
+                      onSelect={setDueDate}
+                      disabled={(d) => d < new Date(Date.now() - 86400000)}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+                {tooSoon && (
+                  <p className="text-xs text-destructive mt-1 flex items-center gap-1">
+                    <AlertTriangle className="size-3" />
+                    Written plans need at least {MIN_LEAD_LABEL.write} notice. Please choose a later date.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -285,7 +324,7 @@ const NewLiftPlanWrite = () => {
             <Button type="button" variant="outline" onClick={() => navigate("/dashboard")}>
               Cancel
             </Button>
-            <Button type="submit" disabled={submitting} size="lg">
+            <Button type="submit" disabled={submitting || tooSoon} size="lg">
               {submitting && <Loader2 className="mr-2 size-4 animate-spin" />}
               Submit request
             </Button>

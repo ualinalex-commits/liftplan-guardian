@@ -112,7 +112,10 @@ const NewLiftPlan = () => {
       if (paymentType === "direct") {
         const link = getPaymentLink("review", equipment as EquipmentType);
         if (link) {
-          window.location.href = link;
+          // Open Stripe in a new tab so iframe sandboxing (preview) doesn't block it,
+          // then send the user to their plan detail page.
+          window.open(link, "_blank", "noopener,noreferrer");
+          navigate(`/dashboard/${plan.id}`);
           return;
         }
       }

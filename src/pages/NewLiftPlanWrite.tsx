@@ -119,6 +119,15 @@ const NewLiftPlanWrite = () => {
       }
 
       toast.success("Write request submitted");
+
+      if (paymentType === "direct") {
+        const link = getPaymentLink("write", equipment as EquipmentType);
+        if (link) {
+          window.location.href = link;
+          return;
+        }
+      }
+
       navigate(`/writes/${write.id}`);
     } catch (err) {
       toast.error((err as Error).message || "Failed to submit");

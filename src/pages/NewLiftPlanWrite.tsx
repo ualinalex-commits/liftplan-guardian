@@ -170,7 +170,7 @@ const NewLiftPlanWrite = () => {
                 required
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
-                placeholder="e.g. Warehouse B — Forklift pallet lift"
+                placeholder="e.g. Warehouse B — Telehandler pallet lift"
               />
             </div>
 

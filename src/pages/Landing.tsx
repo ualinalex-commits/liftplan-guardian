@@ -55,7 +55,7 @@ const Landing = () => {
 
             <p className="text-base sm:text-lg md:text-xl text-primary-foreground/85 max-w-xl leading-relaxed mb-8 drop-shadow">
               Independent UK Appointed Persons review your existing lift plan — or
-              write one from scratch. Tower cranes, mobile cranes, MEWPs, forklifts and more.
+              write one from scratch. Tower cranes, mobile cranes, MEWPs, telehandlers and more.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-10">
@@ -171,7 +171,7 @@ const Landing = () => {
               <ul className="space-y-2 text-sm mb-8">
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="size-4 text-accent mt-0.5 shrink-0" />
-                  Forklift available now — others coming soon
+                  Telehandler & MEWP available now — others coming soon
                 </li>
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="size-4 text-accent mt-0.5 shrink-0" />
@@ -204,8 +204,8 @@ const Landing = () => {
               Every lifting operation, covered under LOLER and British Standards.
             </h2>
             <p className="text-muted-foreground">
-              Reviews are available across all equipment. Written plans are rolling out — forklift
-              first, others coming soon.
+              Reviews are available across all equipment. Written plans are rolling out — telehandler
+              and MEWP first, others coming soon.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">

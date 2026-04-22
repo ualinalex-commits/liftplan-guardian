@@ -27,8 +27,8 @@ export const STATUS_VARIANT: Record<LiftPlanStatus, string> = {
 export const EQUIPMENT_LABEL: Record<EquipmentType, string> = {
   tower_crane: "Tower Crane",
   mobile_crane: "Mobile Crane",
-  digger: "Digger",
-  forklift: "Forklift",
+  digger: "Excavator",
+  forklift: "Telehandler",
   hiab: "Hiab",
   mewp: "MEWP",
 };
@@ -42,8 +42,8 @@ export const TIMEFRAME_LABEL: Record<Timeframe, string> = {
 export const EQUIPMENT_OPTIONS: { value: EquipmentType; label: string }[] = [
   { value: "tower_crane", label: "Tower Crane" },
   { value: "mobile_crane", label: "Mobile Crane" },
-  { value: "digger", label: "Digger" },
-  { value: "forklift", label: "Forklift" },
+  { value: "digger", label: "Excavator" },
+  { value: "forklift", label: "Telehandler" },
   { value: "hiab", label: "Hiab" },
   { value: "mewp", label: "MEWP" },
 ];

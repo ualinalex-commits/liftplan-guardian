@@ -55,7 +55,7 @@ const Landing = () => {
 
             <p className="text-base sm:text-lg md:text-xl text-primary-foreground/85 max-w-xl leading-relaxed mb-8 drop-shadow">
               Independent UK Appointed Persons review your existing lift plan — or
-              write one from scratch. Tower cranes, mobile cranes, MEWPs, forklifts and more.
+              write one from scratch. Tower cranes, mobile cranes, MEWPs, telehandlers and more.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-10">

@@ -204,8 +204,8 @@ const Landing = () => {
               Every lifting operation, covered under LOLER and British Standards.
             </h2>
             <p className="text-muted-foreground">
-              Reviews are available across all equipment. Written plans are rolling out — forklift
-              first, others coming soon.
+              Reviews are available across all equipment. Written plans are rolling out — telehandler
+              and MEWP first, others coming soon.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">

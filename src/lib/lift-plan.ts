@@ -27,8 +27,8 @@ export const STATUS_VARIANT: Record<LiftPlanStatus, string> = {
 export const EQUIPMENT_LABEL: Record<EquipmentType, string> = {
   tower_crane: "Tower Crane",
   mobile_crane: "Mobile Crane",
-  digger: "Digger",
-  forklift: "Forklift",
+  digger: "Excavator",
+  forklift: "Telehandler",
   hiab: "Hiab",
   mewp: "MEWP",
 };

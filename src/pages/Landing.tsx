@@ -171,7 +171,7 @@ const Landing = () => {
               <ul className="space-y-2 text-sm mb-8">
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="size-4 text-accent mt-0.5 shrink-0" />
-                  Forklift available now — others coming soon
+                  Telehandler & MEWP available now — others coming soon
                 </li>
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="size-4 text-accent mt-0.5 shrink-0" />

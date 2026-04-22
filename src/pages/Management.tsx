@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { LiftPlan, EQUIPMENT_LABEL, STATUS_LABEL, LiftPlanStatus } from "@/lib/lift-plan";
+import { PricingManager } from "@/components/PricingManager";
 import { Loader2, BarChart3, CheckCircle2, ClipboardList, DollarSign, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -189,6 +190,8 @@ const Management = () => {
             </div>
           </Card>
         </div>
+
+        <PricingManager />
 
         {isAdmin && (
           <Card className="p-6">

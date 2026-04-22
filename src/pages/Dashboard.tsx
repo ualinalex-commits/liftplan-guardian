@@ -142,7 +142,7 @@ const Dashboard = () => {
                   <PencilRuler className="size-12 mx-auto mb-4 text-muted-foreground" />
                   <h3 className="text-lg font-semibold mb-1">No written plans yet</h3>
                   <p className="text-muted-foreground mb-4">
-                    Currently available for forklift lifts.
+                    Currently available for telehandler and MEWP lifts.
                   </p>
                   <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
                     <Link to="/writes/new">

@@ -42,8 +42,8 @@ export const TIMEFRAME_LABEL: Record<Timeframe, string> = {
 export const EQUIPMENT_OPTIONS: { value: EquipmentType; label: string }[] = [
   { value: "tower_crane", label: "Tower Crane" },
   { value: "mobile_crane", label: "Mobile Crane" },
-  { value: "digger", label: "Digger" },
-  { value: "forklift", label: "Forklift" },
+  { value: "digger", label: "Excavator" },
+  { value: "forklift", label: "Telehandler" },
   { value: "hiab", label: "Hiab" },
   { value: "mewp", label: "MEWP" },
 ];

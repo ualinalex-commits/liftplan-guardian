@@ -108,6 +108,15 @@ const NewLiftPlan = () => {
       }
 
       toast.success("Lift plan submitted for review");
+
+      if (paymentType === "direct") {
+        const link = getPaymentLink("review", equipment as EquipmentType);
+        if (link) {
+          window.location.href = link;
+          return;
+        }
+      }
+
       navigate(`/dashboard/${plan.id}`);
     } catch (err) {
       toast.error((err as Error).message || "Failed to submit");

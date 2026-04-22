@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import { AppLayout } from "@/components/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,17 +9,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  EQUIPMENT_OPTIONS,
-  TIMEFRAME_OPTIONS,
-  EquipmentType,
-  Timeframe,
-  PaymentType,
-} from "@/lib/lift-plan";
+import { EQUIPMENT_OPTIONS, EquipmentType, PaymentType } from "@/lib/lift-plan";
+import { MIN_LEAD_HOURS, MIN_LEAD_LABEL, hoursUntil, ServicePricingRow } from "@/lib/pricing";
 import { toast } from "sonner";
-import { Loader2, Upload, X, ArrowLeft } from "lucide-react";
+import { Loader2, Upload, X, ArrowLeft, CalendarIcon, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const NewLiftPlan = () => {
   const { user, profile } = useAuth();
@@ -28,20 +27,38 @@ const NewLiftPlan = () => {
   const [reference, setReference] = useState("");
   const [description, setDescription] = useState("");
   const [equipment, setEquipment] = useState<EquipmentType | "">("");
-  const [timeframe, setTimeframe] = useState<Timeframe | "">("");
+  const [dueDate, setDueDate] = useState<Date | undefined>();
   const [paymentType, setPaymentType] = useState<PaymentType>("direct");
   const [poNumber, setPoNumber] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [pricing, setPricing] = useState<ServicePricingRow[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("service_pricing" as never)
+        .select("*")
+        .eq("service", "review");
+      setPricing((data as ServicePricingRow[]) ?? []);
+    })();
+  }, []);
+
+  const price = equipment ? pricing.find((p) => p.equipment_type === equipment)?.price ?? 0 : 0;
+  const leadHours = dueDate ? hoursUntil(dueDate) : null;
+  const tooSoon = leadHours !== null && leadHours < MIN_LEAD_HOURS.review;
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
   };
-
   const removeFile = (idx: number) => setFiles((prev) => prev.filter((_, i) => i !== idx));
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !equipment || !timeframe) return;
+    if (!user || !equipment || !dueDate) return;
+    if (tooSoon) {
+      toast.error(`Reviews need at least ${MIN_LEAD_LABEL.review} notice`);
+      return;
+    }
     if (files.length === 0) {
       toast.error("Please upload at least one lift plan file");
       return;
@@ -59,17 +76,18 @@ const NewLiftPlan = () => {
           reference: reference.trim(),
           description: description.trim() || null,
           equipment_type: equipment,
-          timeframe,
+          timeframe: "48h",
+          due_date: dueDate.toISOString(),
           payment_type: paymentType,
           payment_status: paymentType === "po" ? "po_recorded" : "pending",
           po_number: paymentType === "po" ? poNumber.trim() : null,
+          price: price || null,
           status: "submitted",
-        })
+        } as never)
         .select()
         .single();
       if (planErr) throw planErr;
 
-      // Upload files
       for (const file of files) {
         const path = `${user.id}/${plan.id}/${Date.now()}-${file.name}`;
         const { error: upErr } = await supabase.storage
@@ -91,8 +109,7 @@ const NewLiftPlan = () => {
       toast.success("Lift plan submitted for review");
       navigate(`/dashboard/${plan.id}`);
     } catch (err) {
-      const e = err as Error;
-      toast.error(e.message || "Failed to submit");
+      toast.error((err as Error).message || "Failed to submit");
     } finally {
       setSubmitting(false);
     }
@@ -149,17 +166,40 @@ const NewLiftPlan = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                {equipment && price > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">Price: £{price.toFixed(2)}</p>
+                )}
               </div>
               <div>
-                <Label>Timeframe *</Label>
-                <Select value={timeframe} onValueChange={(v) => setTimeframe(v as Timeframe)}>
-                  <SelectTrigger><SelectValue placeholder="Select timeframe" /></SelectTrigger>
-                  <SelectContent>
-                    {TIMEFRAME_OPTIONS.map((o) => (
-                      <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label>Due date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className={cn("w-full justify-start text-left font-normal", !dueDate && "text-muted-foreground")}
+                    >
+                      <CalendarIcon className="mr-2 size-4" />
+                      {dueDate ? format(dueDate, "PPP") : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={dueDate}
+                      onSelect={setDueDate}
+                      disabled={(d) => d < new Date(Date.now() - 86400000)}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto")}
+                    />
+                  </PopoverContent>
+                </Popover>
+                {tooSoon && (
+                  <p className="text-xs text-destructive mt-1 flex items-center gap-1">
+                    <AlertTriangle className="size-3" />
+                    Reviews need at least {MIN_LEAD_LABEL.review} notice. Please choose a later date.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -214,7 +254,7 @@ const NewLiftPlan = () => {
 
           <div className="flex gap-3 justify-end">
             <Button type="button" variant="outline" onClick={() => navigate("/dashboard")}>Cancel</Button>
-            <Button type="submit" disabled={submitting} size="lg">
+            <Button type="submit" disabled={submitting || tooSoon} size="lg">
               {submitting && <Loader2 className="mr-2 size-4 animate-spin" />}
               Submit for review
             </Button>

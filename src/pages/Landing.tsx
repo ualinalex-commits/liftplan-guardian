@@ -10,7 +10,6 @@ import {
   HardHat,
   ClipboardCheck,
   PencilRuler,
-  Clock,
   CheckCircle2,
   Star,
 } from "lucide-react";
@@ -97,9 +96,6 @@ const Landing = () => {
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-primary-foreground/85">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="size-4 text-accent" /> LOLER compliant
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="size-4 text-accent" /> 24h turnaround
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="size-4 text-accent" /> Qualified APs

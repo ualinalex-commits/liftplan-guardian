@@ -15,6 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { EQUIPMENT_OPTIONS, EquipmentType, PaymentType } from "@/lib/lift-plan";
 import { MIN_LEAD_HOURS, MIN_LEAD_LABEL, hoursUntil, ServicePricingRow } from "@/lib/pricing";
+import { getPaymentLink } from "@/lib/payment-links";
 import { toast } from "sonner";
 import { Loader2, Upload, X, ArrowLeft, CalendarIcon, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -107,6 +108,15 @@ const NewLiftPlan = () => {
       }
 
       toast.success("Lift plan submitted for review");
+
+      if (paymentType === "direct") {
+        const link = getPaymentLink("review", equipment as EquipmentType);
+        if (link) {
+          window.location.href = link;
+          return;
+        }
+      }
+
       navigate(`/dashboard/${plan.id}`);
     } catch (err) {
       toast.error((err as Error).message || "Failed to submit");

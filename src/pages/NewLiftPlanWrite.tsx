@@ -120,6 +120,26 @@ const NewLiftPlanWrite = () => {
 
       toast.success("Write request submitted");
 
+      // Notify ADA Lifting of new submission (fire-and-forget)
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "new-submission-notification",
+          recipientEmail: "contact@ada-liftinguk.com",
+          idempotencyKey: `write-submission-${write.id}`,
+          templateData: {
+            serviceType: "Written lift plan",
+            reference: reference.trim(),
+            equipment: EQUIPMENT_OPTIONS.find((o) => o.value === equipment)?.label ?? equipment,
+            clientName: profile?.full_name,
+            clientEmail: profile?.email,
+            clientCompany: profile?.company,
+            paymentType: paymentType === "po" ? `Purchase Order (${poNumber.trim()})` : "Direct payment",
+            details: details.trim(),
+            submissionId: write.id,
+          },
+        },
+      }).catch((err) => console.error("Notification email failed", err));
+
       if (paymentType === "direct") {
         const link = getPaymentLink("write", equipment as EquipmentType);
         if (link) {

@@ -109,6 +109,26 @@ const NewLiftPlan = () => {
 
       toast.success("Lift plan submitted for review");
 
+      // Notify ADA Lifting of new submission (fire-and-forget)
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "new-submission-notification",
+          recipientEmail: "contact@ada-liftinguk.com",
+          idempotencyKey: `review-submission-${plan.id}`,
+          templateData: {
+            serviceType: "Lift plan review",
+            reference: reference.trim(),
+            equipment: EQUIPMENT_OPTIONS.find((o) => o.value === equipment)?.label ?? equipment,
+            clientName: profile?.full_name,
+            clientEmail: profile?.email,
+            clientCompany: profile?.company,
+            paymentType: paymentType === "po" ? `Purchase Order (${poNumber.trim()})` : "Direct payment",
+            details: description.trim(),
+            submissionId: plan.id,
+          },
+        },
+      }).catch((err) => console.error("Notification email failed", err));
+
       if (paymentType === "direct") {
         const link = getPaymentLink("review", equipment as EquipmentType);
         if (link) {

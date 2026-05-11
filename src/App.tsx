@@ -15,6 +15,7 @@ import LiftPlanWriteDetail from "./pages/LiftPlanWriteDetail";
 import WriteRequests from "./pages/WriteRequests";
 import ReviewRequests from "./pages/ReviewRequests";
 import Management from "./pages/Management";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -69,6 +70,7 @@ const App = () => (
               path="/management"
               element={<ProtectedRoute requireReviewer><Management /></ProtectedRoute>}
             />
+            <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

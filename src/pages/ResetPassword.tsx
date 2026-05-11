@@ -15,14 +15,58 @@ const ResetPassword = () => {
   const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    // Supabase auto-handles the recovery token in the URL hash and creates a session.
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") setReady(true);
     });
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) setReady(true);
-    });
+
+    (async () => {
+      const url = new URL(window.location.href);
+      const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+
+      // Newer Supabase email links: ?code=...
+      const code = url.searchParams.get("code");
+      // Newer OTP-style links: ?token_hash=...&type=recovery
+      const tokenHash = url.searchParams.get("token_hash");
+      const type = url.searchParams.get("type") as "recovery" | null;
+      // Older hash-style links: #access_token=...&refresh_token=...&type=recovery
+      const accessToken = hash.get("access_token");
+      const refreshToken = hash.get("refresh_token");
+      const errDesc = url.searchParams.get("error_description") || hash.get("error_description");
+
+      if (errDesc) {
+        setError(errDesc);
+        return;
+      }
+
+      try {
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if (error) throw error;
+          setReady(true);
+        } else if (tokenHash && type) {
+          const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+          if (error) throw error;
+          setReady(true);
+        } else if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          if (error) throw error;
+          setReady(true);
+        } else {
+          const { data } = await supabase.auth.getSession();
+          if (data.session) setReady(true);
+          else setError("Invalid or expired reset link. Please request a new one.");
+        }
+      } catch (e) {
+        setError((e as Error).message || "Invalid or expired reset link.");
+      }
+    })();
+
     return () => sub.subscription.unsubscribe();
   }, []);
 

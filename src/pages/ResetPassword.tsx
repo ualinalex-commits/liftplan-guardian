@@ -97,10 +97,19 @@ const ResetPassword = () => {
         <Card className="p-6 shadow-xl">
           <h1 className="text-2xl font-bold mb-2">Set a new password</h1>
           <p className="text-sm text-muted-foreground mb-6">
-            {ready
+            {error
+              ? error
+              : ready
               ? "Choose a new password for your account."
               : "Validating your reset link…"}
           </p>
+          {error && (
+            <div className="mb-4">
+              <Link to="/forgot-password" className="text-sm text-primary underline">
+                Request a new reset link
+              </Link>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="rp-pw">New password</Label>
